@@ -15,10 +15,10 @@ $options = [
 ];
 $app = new Application($options);
 $response = $app->server->serve();
-var_dump($response);
-exit();
+//var_dump($response);
+//exit();
 // 将响应输出
-//$response->send(); // Laravel 里请使用：return $response;
-return $response;
+$response->send(); // Laravel 里请使用：return $response;
+//return $response;
 
 
