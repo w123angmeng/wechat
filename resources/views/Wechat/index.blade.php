@@ -65,6 +65,7 @@
         </style>
     </head>
     <body>
+        <div>你好,这是圣林源医院的简介！</div>
         <div class="flex-center position-ref full-height">
             @if (Route::has('login'))
                 <div class="top-right links">

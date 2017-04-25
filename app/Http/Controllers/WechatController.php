@@ -1,17 +1,18 @@
 <?php
 
-namespace App\Http\Controllers\Wechat;
+namespace App\Http\Controllers;
 
 //use Aimeos\Shop\Base\View;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use \DB;
 //include __DIR__ . '/../../../vendor/autoload.php'; // 引入 composer 入口文件
-include __DIR__ ."/../../../../vendor/autoload.php";
+include __DIR__ ."/../../../vendor/autoload.php";
 //include  __DIR__ . '/vendor/autoload.php';
 use EasyWeChat\Foundation\Application;
 use EasyWeChat\Message\Text;
 use Log;
+
 
 
 class WechatController extends Controller
@@ -52,8 +53,8 @@ class WechatController extends Controller
      * @return string
      */
     public function serve(){
+        Log::info($_POST);
         Log::info('request arrived123.'); # 注意：Log 为 Laravel 组件，所以它记的日志去 Laravel 日志看，而不是 EasyWeChat 日志
-
         $options = [
             'debug'  => true,
             'app_id' => 'wx9d2be0f76f19dcc8',
@@ -79,27 +80,27 @@ class WechatController extends Controller
                     [
                         "type" => "view",
                         "name" => "医院简介",
-                        "url"  => "http://food-info.ngrok.sinomoses.com/"
+                        "url"  => "http://food-info.ngrok.sinomoses.com/profile/index"
                     ],
                     [
                         "type" => "view",
                         "name" => "医院历史",
-                        "url"  => "http://food-info.ngrok.sinomoses.com/"
+                        "url"  => "http://food-info.ngrok.sinomoses.com/profile/history"
                     ],
                     [
                         "type" => "view",
                         "name" => "医院文化",
-                        "url"  => "http://food-info.ngrok.sinomoses.com/"
+                        "url"  => "http://food-info.ngrok.sinomoses.com/profile/culture"
                     ],
                     [
                         "type" => "view",
                         "name" => "地理位置",
-                        "url"  => "http://food-info.ngrok.sinomoses.com/"
+                        "url"  => "http://food-info.ngrok.sinomoses.com/profile/location"
                     ],
                     [
                         "type" => "view",
                         "name" => "科室导航",
-                        "url"  => "http://food-info.ngrok.sinomoses.com/"
+                        "url"  => "http://food-info.ngrok.sinomoses.com/profile/nav"
                     ],
                 ],
             ],
@@ -109,22 +110,22 @@ class WechatController extends Controller
                     [
                         "type" => "view",
                         "name" => "预约挂号",
-                        "url"  => "http://food-info.ngrok.sinomoses.com/"
+                        "url"  => "http://food-info.ngrok.sinomoses.com/server/appointment"
                     ],
                     [
                         "type" => "view",
                         "name" => "检验单查询",
-                        "url"  => "http://food-info.ngrok.sinomoses.com/"
+                        "url"  => "http://food-info.ngrok.sinomoses.com/server/inspection_sheet_query"
                     ],
                     [
                         "type" => "view",
                         "name" => "门诊记录",
-                        "url"  => "http://food-info.ngrok.sinomoses.com/"
+                        "url"  => "http://food-info.ngrok.sinomoses.com/server/outpatient_records"
                     ],
                     [
                         "type" => "view",
                         "name" => "住院记录",
-                        "url"  => "http://food-info.ngrok.sinomoses.com/"
+                        "url"  => "http://food-info.ngrok.sinomoses.com/server/hospital_records"
                     ],
                 ],
             ],
@@ -134,17 +135,17 @@ class WechatController extends Controller
                     [
                         "type" => "view",
                         "name" => "个人中心",
-                        "url"  => "http://food-info.ngrok.sinomoses.com/"
+                        "url"  => "http://food-info.ngrok.sinomoses.com/member/center"
                     ],
                     [
                         "type" => "view",
                         "name" => "常见问题",
-                        "url"  => "http://food-info.ngrok.sinomoses.com/"
+                        "url"  => "http://food-info.ngrok.sinomoses.com/member/faq"
                     ],
                     [
                         "type" => "view",
                         "name" => "意见反馈",
-                        "url"  => "http://food-info.ngrok.sinomoses.com/"
+                        "url"  => "http://food-info.ngrok.sinomoses.com/member/feedback"
                     ],
                 ],
             ],
@@ -153,11 +154,12 @@ class WechatController extends Controller
         Log::info('menu is .'.$menus);
         $server = $app->server;
         $server->setMessageHandler(function ($message) {
+            Log::info('message is .'.$message);
             switch ($message->MsgType) {
                 case 'event':
                     switch ($message->Event) {
                         case 'subscribe':
-                            return '你好';
+                            return '你好,欢迎关注圣林源公众号！';
                             break;
                         default:
                             return 'hello';
